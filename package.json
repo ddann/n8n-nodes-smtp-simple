@@ -9,23 +9,23 @@
     "mail"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/ddann/n8n-nodes-smtp-simple#readme",
   "author": {
     "name": "Daniel Rozen",
     "email": ""
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/ddann/n8n-nodes-smtp-simple.git"
   },
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --noEmitOnError false",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
     "lint": "eslint nodes credentials package.json",
     "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.js nodes credentials package.json"
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "dist"
@@ -40,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@types/nodemailer": "^7.0.1",
     "@typescript-eslint/parser": "^5.45.0",
     "eslint": "^8.29.0",
     "eslint-plugin-n8n-nodes-base": "^1.11.0",

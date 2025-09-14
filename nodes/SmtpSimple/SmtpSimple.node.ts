@@ -204,11 +204,12 @@ export class SmtpSimple implements INodeType {
 				});
 
 			} catch (error) {
+				const errorMessage = error instanceof Error ? error.message : String(error);
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {
 							success: false,
-							error: error.message,
+							error: errorMessage,
 						},
 						pairedItem: {
 							item: i,
@@ -217,7 +218,7 @@ export class SmtpSimple implements INodeType {
 				} else {
 					throw new NodeOperationError(
 						this.getNode(),
-						`Failed to send email: ${error.message}`,
+						`Failed to send email: ${errorMessage}`,
 						{ itemIndex: i }
 					);
 				}

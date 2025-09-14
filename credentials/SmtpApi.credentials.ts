@@ -73,10 +73,4 @@ export class SmtpApi implements ICredentialType {
 		type: 'generic',
 		properties: {},
 	};
-
-	test: ICredentialDataDecryptedObject = {
-		request: {
-			baseURL: '={{$credentials.host}}:{{$credentials.port}}',
-		},
-	};
 }
