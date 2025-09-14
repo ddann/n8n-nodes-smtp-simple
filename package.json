@@ -1,0 +1,53 @@
+{
+  "name": "n8n-nodes-smtp-simple",
+  "version": "0.1.0",
+  "description": "Simple SMTP node for n8n - send emails via SMTP",
+  "keywords": [
+    "n8n-community-node-package",
+    "smtp",
+    "email",
+    "mail"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "author": {
+    "name": "Daniel Rozen",
+    "email": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.js nodes credentials package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/SmtpApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/SmtpSimple/SmtpSimple.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.29.0",
+    "eslint-plugin-n8n-nodes-base": "^1.11.0",
+    "n8n-workflow": "*",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.0"
+  }
+}
