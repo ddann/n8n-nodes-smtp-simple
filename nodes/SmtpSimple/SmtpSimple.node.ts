@@ -140,16 +140,47 @@ export class SmtpSimple implements INodeType {
 
 		const credentials = await this.getCredentials('smtpApi');
 
-		// Create SMTP transporter
-		const transporter = nodemailer.createTransport({
+		// Create SMTP transporter with automatic SSL/TLS configuration
+		let port = credentials.port as number;
+		
+		// Handle custom port selection
+		if (credentials.port === 'custom') {
+			port = credentials.customPort as number;
+		}
+		
+		let secure = credentials.secure as boolean;
+		
+		// Auto-detect secure setting based on port if not explicitly set
+		// Port 465: SSL/TLS (secure = true)
+		// Port 587: STARTTLS (secure = false)
+		// Port 25: Plain/STARTTLS (secure = false)
+		if (port === 465) {
+			secure = true;
+		} else if (port === 587 || port === 25) {
+			secure = false;
+		}
+		
+		// Build transport configuration
+		const transportConfig: any = {
 			host: credentials.host as string,
-			port: credentials.port as number,
-			secure: credentials.secure as boolean,
+			port: port,
+			secure: secure,
 			auth: {
 				user: credentials.user as string,
 				pass: credentials.password as string,
 			},
-		});
+		};
+		
+		// For non-secure connections, enable STARTTLS and add TLS options
+		if (!secure) {
+			transportConfig.requireTLS = true;
+			transportConfig.tls = {
+				rejectUnauthorized: false, // Allow self-signed certificates for testing
+				minVersion: 'TLSv1.2' // Ensure modern TLS version
+			};
+		}
+		
+		const transporter = nodemailer.createTransport(transportConfig);
 
 		for (let i = 0; i < items.length; i++) {
 			try {

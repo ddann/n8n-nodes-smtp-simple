@@ -21,17 +21,47 @@ export class SmtpApi implements ICredentialType {
 		{
 			displayName: 'Port',
 			name: 'port',
-			type: 'number',
+			type: 'options',
+			options: [
+				{
+					name: '587 (STARTTLS - Recommended)',
+					value: 587,
+				},
+				{
+					name: '465 (SSL/TLS)',
+					value: 465,
+				},
+				{
+					name: '25 (Plain/STARTTLS)',
+					value: 25,
+				},
+				{
+					name: 'Custom',
+					value: 'custom',
+				},
+			],
 			default: 587,
 			required: true,
-			description: 'The SMTP server port (587 for TLS, 465 for SSL, 25 for plain)',
+			description: 'SMTP port - 587 (STARTTLS) is recommended for most providers',
+		},
+		{
+			displayName: 'Custom Port',
+			name: 'customPort',
+			type: 'number',
+			default: 587,
+			displayOptions: {
+				show: {
+					port: ['custom'],
+				},
+			},
+			description: 'Custom SMTP port number',
 		},
 		{
 			displayName: 'Secure Connection',
 			name: 'secure',
 			type: 'boolean',
 			default: false,
-			description: 'Whether to use SSL/TLS (true for port 465, false for 587/25)',
+			description: 'SSL/TLS setting (auto-detected based on port: 465=true, 587/25=false)',
 		},
 		{
 			displayName: 'Username',
