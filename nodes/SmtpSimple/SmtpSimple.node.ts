@@ -141,7 +141,7 @@ export class SmtpSimple implements INodeType {
 		const credentials = await this.getCredentials('smtpApi');
 
 		// Create SMTP transporter
-		const transporter = nodemailer.createTransporter({
+		const transporter = nodemailer.createTransport({
 			host: credentials.host as string,
 			port: credentials.port as number,
 			secure: credentials.secure as boolean,
